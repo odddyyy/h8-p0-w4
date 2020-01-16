@@ -1,14 +1,13 @@
 function angkaPrima(angka) {
   // you can only write your code here!
-  if (angka == 2 || angka == 3 || angka == 5){
-      return true;
+  var flag = true;
+  for (i=2;i<=angka-1;i++){
+      if (angka%i == 0){
+        flag = false;
+        break;
+      }
   }
-  else if (angka%2 != 0 && angka%3 != 0 && angka%5 != 0){
-      return true;
-  }
-  else{
-      return false;
-  }
+  return flag;
 }
 
 // TEST CASES
