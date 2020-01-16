@@ -25,11 +25,11 @@ function main (cars) {
   var totalTax = 0;
 
   //creating template array based on the price of the car
-  for (i=0;i<cars.length;i++){
-    if (cars[i].price >= 400000000){
+  for (o=0;o<cars.length;o++){
+    if (cars[o].price >= 400000000){
       display[tax[0]] = [];
     }
-    else if (cars[i].price >= 250000000){
+    else if (cars[o].price >= 250000000){
       display[tax[1]] = [];
     }
     else{
@@ -37,31 +37,51 @@ function main (cars) {
     }
   }
 
+
   //function adding `Rp ` and `.` for thousands
   function formatNumber(num) {
-    num = `Rp. ` + num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + `,00`;
-    return num;
+    num = String(num);
+    var revNum = ``;
+    for (i=num.length-1;i>=0;i--){
+        revNum += num[i];
+    }
+    var newRevNum = ``;
+    for (i=0,x=1;i<revNum.length;i++,x++){
+        if (x%3 == 0 && i<revNum.length-1){
+            newRevNum += revNum[i];
+            newRevNum += `.`;
+        }
+        else{
+            newRevNum += revNum[i];
+        }
+    }
+    var display = `Rp. `;
+    for (i=newRevNum.length-1;i>=0;i--){
+        display += newRevNum[i];
+    }
+    display += `,00`;
+    return display;
   }
 
-  //assigning tax to the cars and deleting the 'price' property of the car
-  for (i=0;i<cars.length;i++){
-    if (cars[i].price >= 400000000){
-      totalTax = cars[i].price * 0.3;
-      cars[i].tax = formatNumber(totalTax);
-      delete cars[i].price;
-      display[tax[0]].push(cars[i]);
+  //assigning tax to the cars and deleting the price property of the car
+  for (m=0;m<cars.length;m++){
+    if (cars[m].price >= 400000000){
+      totalTax = cars[m].price * 0.3;
+      cars[m].tax = formatNumber(totalTax);
+      delete cars[m].price;
+      display[tax[0]].push(cars[m]);
     }
-    else if (cars[i].price >= 250000000){
-      totalTax = cars[i].price * 0.2;
-      cars[i].tax = formatNumber(totalTax);
-      delete cars[i].price;
-      display[tax[1]].push(cars[i]);
+    else if (cars[m].price >= 250000000){
+      totalTax = cars[m].price * 0.2;
+      cars[m].tax = formatNumber(totalTax);
+      delete cars[m].price;
+      display[tax[1]].push(cars[m]);
     }
     else{
-      totalTax = cars[i].price * 0.1;
-      cars[i].tax = formatNumber(totalTax);
-      delete cars[i].price;
-      display[tax[2]].push(cars[i]);
+      totalTax = cars[m].price * 0.1;
+      cars[m].tax = formatNumber(totalTax);
+      delete cars[m].price;
+      display[tax[2]].push(cars[m]);
     }
   }
   return display;
